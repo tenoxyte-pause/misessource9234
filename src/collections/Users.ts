@@ -1,39 +1,30 @@
-// collections/Users.ts
 import { CollectionConfig } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     forgotPassword: {
-      generateEmailHTML: ({ req, token, user } = {}) => {
-        // Use the token provided to allow your user to reset their password
-        const resetPasswordURL = `https://misessource.netlify.app/reset-password?token=${token}`
-
+      generateEmailHTML: async ({ token, user } = {}) => {
         return `
-          <!doctype html>
-          <html>
-            <body>
-              <h1>Setze das Passwort zurück:</h1>
-              <p>Hello, ${user.email}!</p>
-              <p>Klicke unten auf den Link, um das Passwort zu resetten.</p>
-              <p>
-                <a href="${resetPasswordURL}">${resetPasswordURL}</a>
-              </p>
-            </body>
-          </html>
-        `
+          <h4>Misessource // Passwort zurücksetzen</h4>
+          <p>Sehr geehrter ${user.email},</p>
+          <p>klicke auf diesen Link, um dein Passwort zurückzusetzen:</p>
+          <a href="https://misessource.netlify.app/reset-password?token=${token}">
+            Passwort zurücksetzen
+          </a>
+        `;
       },
+      generateEmailSubject: () => 'Passwort zurücksetzen',
     },
   },
   admin: { useAsTitle: 'email' },
+
   access: {
-    create: () => true, // Jeder darf sich registrieren
+    create: () => true,
     read: ({ req, id }) =>
       req.user?.role === 'admin' || req.user?.id === id,
-
     update: ({ req, id }) =>
       req.user?.role === 'admin' || req.user?.id === id,
-
     delete: ({ req, id }) =>
       req.user?.role === 'admin' || req.user?.id === id,
   },
@@ -43,37 +34,30 @@ const Users: CollectionConfig = {
       name: 'name',
       label: 'Name',
       type: 'text',
-      required: false,
     },
     {
       name: 'monthly',
-      admin: {
-        isClearable: true,
-      },
       type: 'select',
+      admin: { isClearable: true },
       options: ['1', '2', '3'],
     },
     {
       name: 'role',
       type: 'select',
       options: ['user', 'admin'],
-	  access: {
-	    update: ({ req }) => req.user?.role === 'admin',
-	  },
     },
   ],
+
   hooks: {
     beforeChange: [
       ({ data, operation }) => {
-        if (operation === 'create') {
-          if (!data.role) {
-            data.role = 'user';
-          }
+        if (operation === 'create' && !data.role) {
+          data.role = 'user';
         }
         return data;
       },
     ],
   },
-}
+};
 
-export default Users
+export default Users;
