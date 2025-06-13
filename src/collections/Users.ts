@@ -5,7 +5,7 @@ const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     forgotPassword: {
-      generateEmailHTML: ({ req, token, user }) => {
+      generateEmailHTML: ({ req, token, user } = {}) => {
         // Use the token provided to allow your user to reset their password
         const resetPasswordURL = `https://misessource.netlify.app/reset-password?token=${token}`
 
@@ -57,6 +57,9 @@ const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       options: ['user', 'admin'],
+	  access: {
+	    update: ({ req }) => req.user?.role === 'admin',
+	  },
     },
   ],
   hooks: {

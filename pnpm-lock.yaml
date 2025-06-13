@@ -11,6 +11,9 @@ importers:
       '@payloadcms/db-mongodb':
         specifier: 3.33.0
         version: 3.33.0(@aws-sdk/credential-providers@3.799.0)(payload@3.33.0(graphql@16.11.0)(typescript@5.7.3))
+      '@payloadcms/email-nodemailer':
+        specifier: ^3.42.0
+        version: 3.42.0(payload@3.33.0(graphql@16.11.0)(typescript@5.7.3))
       '@payloadcms/next':
         specifier: 3.33.0
         version: 3.33.0(@types/react@19.1.0)(graphql@16.11.0)(monaco-editor@0.52.2)(next@15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.33.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
@@ -29,6 +32,9 @@ importers:
       next:
         specifier: 15.3.0
         version: 15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4)
+      nodemailer:
+        specifier: ^7.0.3
+        version: 7.0.3
       payload:
         specifier: 3.33.0
         version: 3.33.0(graphql@16.11.0)(typescript@5.7.3)
@@ -918,6 +924,12 @@ packages:
     engines: {node: ^18.20.2 || >=20.9.0}
     peerDependencies:
       payload: 3.33.0
+
+  '@payloadcms/email-nodemailer@3.42.0':
+    resolution: {integrity: sha512-bIAF4y5khTSXPOkRNjW7xda5tTsusczlBOIB9WyQe1K+T/6WfSEf9dJA49tP0OVQyNOdsylwqi3nMJKFCbdqAQ==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.42.0
 
   '@payloadcms/graphql@3.33.0':
     resolution: {integrity: sha512-e3Hf//A4GVueWbIUDNMybbIDe79gzottj/5mvQiAdImXhKPsFgw4qqIw9k88FxsWX3Xcm0q8R2Lfyyf6WnqquQ==}
@@ -2688,6 +2700,10 @@ packages:
 
   nodemailer@6.9.16:
     resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
+    engines: {node: '>=6.0.0'}
+
+  nodemailer@7.0.3:
+    resolution: {integrity: sha512-Ajq6Sz1x7cIK3pN6KesGTah+1gnwMnx5gKl3piQlQQE/PwyJ4Mbc8is2psWYxK3RJTVeqsDaCv8ZzXLCDHMTZw==}
     engines: {node: '>=6.0.0'}
 
   normalize-path@3.0.0:
@@ -4690,6 +4706,11 @@ snapshots:
       - supports-color
 
   '@payloadcms/email-nodemailer@3.33.0(payload@3.33.0(graphql@16.11.0)(typescript@5.7.3))':
+    dependencies:
+      nodemailer: 6.9.16
+      payload: 3.33.0(graphql@16.11.0)(typescript@5.7.3)
+
+  '@payloadcms/email-nodemailer@3.42.0(payload@3.33.0(graphql@16.11.0)(typescript@5.7.3))':
     dependencies:
       nodemailer: 6.9.16
       payload: 3.33.0(graphql@16.11.0)(typescript@5.7.3)
@@ -6948,6 +6969,8 @@ snapshots:
       whatwg-url: 5.0.0
 
   nodemailer@6.9.16: {}
+
+  nodemailer@7.0.3: {}
 
   normalize-path@3.0.0: {}
 
