@@ -3,7 +3,28 @@ import { CollectionConfig } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
+  auth: {
+    forgotPassword: {
+      generateEmailHTML: ({ req, token, user }) => {
+        // Use the token provided to allow your user to reset their password
+        const resetPasswordURL = `https://misessource.netlify.app/reset-password?token=${token}`
+
+        return `
+          <!doctype html>
+          <html>
+            <body>
+              <h1>Setze das Passwort zurück:</h1>
+              <p>Hello, ${user.email}!</p>
+              <p>Klicke unten auf den Link, um das Passwort zu resetten.</p>
+              <p>
+                <a href="${resetPasswordURL}">${resetPasswordURL}</a>
+              </p>
+            </body>
+          </html>
+        `
+      },
+    },
+  },
   admin: { useAsTitle: 'email' },
   access: {
     create: () => true, // Jeder darf sich registrieren

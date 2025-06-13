@@ -14,11 +14,25 @@ import Posts2 from './collections/Posts2'
 import Products from './collections/Products'
 import Reviews from './collections/Reviews'
 import { Media } from './collections/Media'
+import nodemailer from 'nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  email: nodemailerAdapter({
+    defaultFromAddress: 'info@payloadcms.com',
+    defaultFromName: 'Payload',
+    // Any Nodemailer transport
+    transport: await nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    }),
+  }),
   cors: ['https://misessource.netlify.app'], // deine Frontend-URLs
   admin: {
     user: Users.slug,
